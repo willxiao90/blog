@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>我的第一篇博客 | Will Xiao</title>
+  <title>我的第一篇博客 | Will Xiao | 前端菜鸟一个</title>
 
   
   <meta name="author" content="Will Xiao">
@@ -44,7 +44,7 @@
     <h1 class="site-title">
       <a href="/blog/">Will Xiao</a>
     </h1>
-    <p class="site-description"></p>
+    <p class="site-description">前端菜鸟一个</p>
   </div>
   <nav class="site-navigation">
     <ul>
@@ -119,7 +119,7 @@
 			repo: 'blog',
 			owner: 'willxiao90',
 			admin: ['willxiao90'],
-			id: (location.pathname).split("/").pop().substring(0, 49), // 解决 github label 长度限制 50 字符问题
+			id: decodeURIComponent(location.pathname).substring(0, 50), // 解决 id 长度限制 50 个字符问题
 			distractionFreeMode: false
 		})
 
