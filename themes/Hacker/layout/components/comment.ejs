@@ -11,7 +11,7 @@
 			repo: '<%= theme.gitalk_repo %>',
 			owner: '<%= theme.gitalk_owner %>',
 			admin: ['<%- theme.gitalk_admin.join("', '") %>'],
-			id: (location.pathname).split("/").pop().substring(0, 49), // 解决 github label 长度限制 50 字符问题
+			id: decodeURIComponent(location.pathname).substring(0, 50), // 解决 id 长度限制 50 个字符问题
 			distractionFreeMode: false
 		})
 
