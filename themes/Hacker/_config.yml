@@ -1,0 +1,35 @@
+menu:
+  Home: /
+  Archives: /archives
+  About: /about
+  RSS: /atom.xml
+
+# gitment
+gitment: false
+gitment_owner: willxiao90
+gitment_repo: blog
+gitment_client_id: 4421bfda8e8d375deae4
+gitment_client_secret: a7f979b31ff68c0b8309e9e0d55991576bdb4a99
+
+# gitalk
+gitalk: true
+gitalk_owner: willxiao90
+gitalk_admin: ['willxiao90']
+gitalk_repo: blog
+gitalk_client_id: 4421bfda8e8d375deae4
+gitalk_client_secret: a7f979b31ff68c0b8309e9e0d55991576bdb4a99
+
+# valine comment
+valine: false
+leancloud_id:
+leancloud_key:
+
+# disqus comment
+disqus: false
+disqus_shortname:
+
+# google analytics
+googleTrackId: UA-169332409-1
+
+# whether to show read more button when showing article in excerpt in main page
+read_more: false
