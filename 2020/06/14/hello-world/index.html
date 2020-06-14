@@ -73,7 +73,7 @@
   <div class="article-top-meta">
     <span class="posted-on">
       <a href="/blog/2020/06/14/hello-world/" rel="bookmark">
-        <time class="entry-date published" datetime="2020-06-14T07:45:00.268Z">
+        <time class="entry-date published" datetime="2020-06-14T08:50:26.386Z">
           2020-06-14
         </time>
       </a>
@@ -131,7 +131,7 @@
 			repo: 'blog',
 			owner: 'willxiao90',
 			admin: ['willxiao90'],
-			id: location.pathname,
+			id: (location.pathname).split("/").pop().substring(0, 49), // 解决 github label 长度限制 50 字符问题
 			distractionFreeMode: false
 		})
 

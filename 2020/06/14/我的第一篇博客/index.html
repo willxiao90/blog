@@ -119,7 +119,7 @@
 			repo: 'blog',
 			owner: 'willxiao90',
 			admin: ['willxiao90'],
-			id: location.pathname,
+			id: (location.pathname).split("/").pop().substring(0, 49), // 解决 github label 长度限制 50 字符问题
 			distractionFreeMode: false
 		})
 
