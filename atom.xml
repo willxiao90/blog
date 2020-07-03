@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://willxiao90.github.io/"/>
-  <updated>2020-06-19T08:10:26.455Z</updated>
+  <updated>2020-07-03T10:33:33.449Z</updated>
   <id>https://willxiao90.github.io/</id>
   
   <author>
@@ -17,47 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://willxiao90.github.io/2020/06/19/hello-world/"/>
-    <id>https://willxiao90.github.io/2020/06/19/hello-world/</id>
-    <published>2020-06-19T08:10:26.455Z</published>
-    <updated>2020-06-19T08:10:26.455Z</updated>
+    <title>Vue 与 React 的区别</title>
+    <link href="https://willxiao90.github.io/2020/06/29/Vue%20%E4%B8%8E%20React%20%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>https://willxiao90.github.io/2020/06/29/Vue%20%E4%B8%8E%20React%20%E7%9A%84%E5%8C%BA%E5%88%AB/</id>
+    <published>2020-06-29T10:19:26.000Z</published>
+    <updated>2020-07-03T10:33:33.449Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>Vue 与 React 有什么区别？</p></blockquote><p>这是前端开发同学面试时经常遇到的问题。</p><p>我也不例外，我最开始接触的是 React，对 Vue 的理解一直比较片面。感觉 Vue 要学很多 html 指令，很不习惯，也没觉得 Vue 比 React 有什么优势。</p><p>直到现在，使用了 Vue 一年之后，对 Vue 有了更多感受，也消除了一些刻板印象。</p><p>首先，这两个框架，其实是非常相似的，都有以下特性：</p><ol><li>响应式（Reactive）。两个框架都是一种类似 VM 的架构，将状态从视图层分离出来，开发者只需要关注业务逻辑，不需要直接操作 DOM 。当应用发生改变时，我们只需要更新状态即可，框架会自动帮我们重新渲染页面。</li><li>组件化（Composable）。一个页面，可以拆分成一棵嵌套的组件树，我们只需要开发一个个组件即可，同一个组件可以在多个地方使用，这样就提升了代码的复用性和可维护性。</li><li>使用了 Virtual DOM。框架在操作真实 DOM 之前，会先在内存中生成虚拟 DOM，最后再批量操作真实 DOM，以提高性能。</li></ol><p>它们都是非常优秀的单页应用（SPA）开发框架，我个人理解，他们的差别主要是实现方式不同，主要体现在响应式和组件化上面。</p><h2 id="响应式原理"><a href="#响应式原理" class="headerlink" title="响应式原理"></a>响应式原理</h2><p>Vue 的响应式，是使用观察者模式实现的。Vue 会遍历 data 状态对象，使用 Object.defineProperty() 将每个属性都转换为 getter/setter。</p><p>每个 Vue 组件实例都对应一个 watcher 实例，在组件渲染（render）时，会生成一颗虚拟 DOM 树，watcher 实例会记录哪些子组件用到了（getter）哪些数据 property。当数据发生改变时，会触发 setter 方法，watcher实例会通知所有用到了这个数据的子组件，调用该子组件的 updateComponent 方法。</p><p><img src="https://cn.vuejs.org/images/data.png" alt=""></p><p>例如，一个 TodoList 的组件，代码结构如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;todo-items :items&#x3D;&quot;items&quot; &#x2F;&gt;</span><br><span class="line">    &lt;add-todo v-model&#x3D;&quot;text&quot; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">  text: &#39;&#39;,</span><br><span class="line">  items: []</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure><p>在这个组件渲染过程中，watcher 会记录 TodoItems 子组件用到了 items 数据属性，AddTodo  子组件用到了 text 数据属性。</p><p>假设 AddTodo 组件里面是一个 input 元素，当在 input 输入内容是，会修改 text 数据属性，Vue 就会通知用到了 text 数据属性的所有子组件，这里只有 AddTodo 一个组件，所以 Vue 就只更新 AddTodo 这一个组件。</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+        &lt;blockquote&gt;
+&lt;p&gt;Vue 与 React 有什么区别？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这是前端开发同学面试时经常遇到的问题。&lt;/p&gt;
+&lt;p&gt;我也不例外，我最开始接触的是 React，对 Vue 的理解一直比较片面。感觉 Vue 要学很多 html 指令，
       
     
     </summary>
     
     
     
-  </entry>
-  
-  <entry>
-    <title>我的第一篇博客</title>
-    <link href="https://willxiao90.github.io/2020/06/14/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
-    <id>https://willxiao90.github.io/2020/06/14/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</id>
-    <published>2020-06-14T10:19:26.000Z</published>
-    <updated>2020-06-19T08:10:26.455Z</updated>
-    
-    <content type="html"><![CDATA[<p>测试内容很长很长测试内容很长很长测试内容很长很长测试内容很长很长测试内容很长很长测试内容很长很长…</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;测试内容很长很长测试内容很长很长测试内容很长很长测试内容很长很长测试内容很长很长测试内容很长很长…&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
+      <category term="vue, react" scheme="https://willxiao90.github.io/tags/vue-react/"/>
     
   </entry>
   
