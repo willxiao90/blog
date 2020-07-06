@@ -18,13 +18,13 @@ tags: vue, react
 2. 组件化（Composable）。一个页面，可以拆分成一棵嵌套的组件树，我们只需要开发一个个组件即可，同一个组件可以在多个地方使用，这样就提升了代码的复用性和可维护性。
 3. 使用了 Virtual DOM。框架在操作真实 DOM 之前，会先在内存中生成虚拟 DOM，最后再批量操作真实 DOM，以提高性能。
 
-我个人理解，它们最大的差别是响应式原理不同，它们对组件的定义方式和 state 数据管理也有一些差别。
+我个人理解，它们最大的差别是响应式原理不同，组件的定义方式和 state 状态管理也有一些差别。
 
 ## 一、响应式原理不同
 
 Vue 的响应式，是使用观察者模式实现的。Vue 会遍历 data 数据对象，使用 Object.defineProperty() 将每个属性都转换为 getter/setter。
 
-每个 Vue 组件实例都对应一个  watcher  实例，在组件渲染（render）过程中时，watcher 实例会记录哪些子组件用到了（getter）哪些数据属性。当数据属性发生改变时，会触发 setter 方法，watcher 实例会通知所有用到了这个数据属性的子组件，调用该子组件的 updateComponent 方法。
+每个 Vue 组件实例都对应一个  watcher  实例，在组件渲染（render）过程中时，watcher 实例会记录哪些子组件用到了（getter）哪些数据属性。当数据属性发生改变时，会触发 setter 方法，watcher 实例会通知所有用到了这个数据属性的子组件，调用该子组件的 updateComponent 方法更新组件。
 
 ![](https://cn.vuejs.org/images/data.png)
 
@@ -47,18 +47,16 @@ Vue 的响应式，是使用观察者模式实现的。Vue 会遍历 data 数据
 
 ---
 
-React 的响应式，是  使用 diff 算法实现的。React 在 state 或 props 改变时，会调用 render() 方法，生成一个虚拟 DOM 树，React 会将这棵树与上一次生成的树进行比较，找出其中的差异，并更新差异的部分。
+React 的响应式，是使用 diff 算法实现的。React 在 state 或 props 改变时，会调用 render() 方法，生成一个虚拟 DOM 树，React 会将这棵树与上一次生成的树进行比较，找出其中的差异，并更新差异的部分。
 
-比较两棵树，找出其中的差异，并生产一个做小操作数。这个算法的复杂度比较高，是 O(n 3 )，React 为了提高性能， 提出了一种复杂度为 O(n) 的优化算法， 这个算法有两个重要的假设：
+这个算法问题有一些通用的解决方案，即生成将一棵树转换成另一棵树的最小操作数。但是，这个算法的复杂度比较高，是 O(n 3 )，React 为了提高性能， 提出了一套复杂度为 O(n) 的优化算法， 这个算法有两个重要的假设：
 
-1. 两个不同类型的  元素会产生出不同的树。当根节点元素类型发生改变时，React 会销毁旧节点创建新节点。比如当一个元素从 `<Button>` 变成 `<div>`，或者 `<ComponentA>` 变成 `<ComponentB>`。当元素类型相同时，React 会保留 DOM 节点，仅比较并更新有改变的属性。如果有子节点，React 会递归比较  子节点。
+1. 两个不同类型的元素会产生出不同的树。当根节点元素类型发生改变时，React 会销毁旧节点创建新节点。比如当一个元素从 `<Button>` 变成 `<div>`，或者 `<ComponentA>` 变成 `<ComponentB>`。当元素类型相同时，React 会保留 DOM 节点，仅比较并更新有改变的属性。如果元素有子节点，React 会递归比较  子节点。
 2. 当元素类型相同时，开发者可以使用 key 属性来标识元素的唯一性。比如一个列表， 有多个相同类型的子节点，当子节点顺序发生改变是，如果没有一个唯一标识，就有可能产生比较多的操作数。React 引入 key 属性作为唯一标识，就是为了解决这个问题。
 
 关于 React 的  diff 算法，官方文档写的很清楚 ，我就不多说了。 详情请看：[https://zh-hans.reactjs.org/docs/reconciliation.html](https://zh-hans.reactjs.org/docs/reconciliation.html)
 
-## 二、Vue 可以直接修改状态，React 不可以
-
-Vue 可以直接修改 data 数据属性，React 必须通过 setState() 方法更新状态。
+## 二、Vue 可以直接修改状态，React 必须通过 setState() 更新状态
 
 这个区别其实也是因为它们的响应式原理不同。
 
@@ -66,7 +64,124 @@ Vue 数据属性变更时，会自动通知  所有依赖这个属性的子组�
 
 React 调用 setState() 方法，组件  的 render() 方法会自动执行，重新渲染页面。但是直接修改 state，不会调用 render() 方法，所以组件就不会正确更新，这个时候可以调用 forceUpdate() 强制更新组件。但是尽量不要用 forceUpdate() 方法，因为 setState() 更新组件是异步的，会自动将一个时间循环里的多个 setState() 状态合并，以优化性能，所以正常情况  应该使用 setState() 更新状态。
 
-## 三、Vue 支持双向数据流，React 只允许单向数据流
+## 三、Vue 支持双向数据绑定，React 只允许单向数据流
+
+Vue 提供了 v-model 指令，可以进行双向数据绑定。不过 v-model 其实只是一个语法糖，它的本质是  绑定 value 属性，并监听 input 事件，当 input 有新的  内容时更新 value 属性。
+
+当 v-model  绑定一个对象时，Vue 允许子组件直接修改对象属性，得益于 Vue 的响应式原理，父组件中的用到对象属性的地方也会自动更新。
+
+例如，有一个很长  的表单，字段  实在太多了，我们就需要把这个组件拆分为更小的子组件，这个时候，我们可以利用状态提升的技巧， 把状态都  放在父组件里面，然后把父组件的状态对象使用 v-model 指令绑定给子组件，在子组件中就可以直接修改父组件的对象  属性。
+
+```html
+<template>
+  <form>
+    <base-info v-model="form" />
+    <company-info v-model="form.companyInfo" />
+    <education-info v-model="form.educationInfo" />
+  </form>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        form: {
+          name: '',
+          gender: 0,
+          age: 18,
+          email: '',
+          phone: '',
+          address1: '',
+          address2: '',
+          companyInfo: {
+            name: '',
+            tel: '',
+            address: ''
+          },
+          educationInfo: {
+            college: '',
+            profession: '',
+            graduateAt: ''
+          }
+          ...
+        }
+      }
+    }
+  }
+</script>
+```
+
+---
+
+React 只允许单向数据流，React 认为这样虽然麻烦一点儿，但是显式声明的方法更有助于人们理解程序的运作方式，不容易引入 bug。
+
+上面的例子，如果使用 React 的写法，需要将修改父组件状态的方法传递给子组件，在子组件中调用。
+
+```javascript
+class Person extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      gender: 1,
+      phone: '',
+      email: '',
+      address1: '',
+      address2: '',
+      companyInfo: {
+        name: '',
+        tel: '',
+        address: ''
+      },
+      educationInfo: {
+        college: '',
+        profession: '',
+        graduateAt: ''
+      }
+      ...
+    };
+  }
+
+  updateBaseInfo(prop, value) {
+    this.setState((state) => {
+      ...state,
+      {prop: value}
+    });
+  }
+
+  updateCompanyInfo(prop, value) {
+    this.setState((state) => {
+      ...state,
+      companyInfo: {
+        ...state.companyInfo,
+        {prop: value}
+      }
+    });
+  }
+
+  updateEducationInfo(prop, value) {
+    this.setState((state) => {
+      ...state,
+      educationInfo: {
+        ...state.educationInfo,
+        {prop: value}
+      }
+    });
+  }
+
+  render() {
+    const {form} = this.state;
+    return (
+      <form>
+        <baseInfo data={form} update={updateBaseInfo} />
+        <companyInfo data={form.companyInfo} update={updateCompanyInfo} />
+        <educationInfo data={form.educationInfo} update={updateEducationInfo} />
+      </form>
+    )
+  }
+}
+```
 
 ## 四、React 推荐使用不可变的数据
 
@@ -95,7 +210,7 @@ React 推荐使用 JSX，JSX 是使用 JS 的语法来编写 html 代码，所�
 
 事实上 Vue 也提供了 JSX 的支持，不过 Vue 更推荐 template 的方式。
 
-## 六、React 对函数组件有  更好的支持
+## 六、React 对函数组件有更好的支持
 
 React 发布之初，就支持函数组件，一个无状态的组件，可以使用一个函数表示， 函数组件接收一个 props 属性，并返回一个 React 元素。例如：
 
@@ -109,4 +224,8 @@ React 16.8 新增了 Hooks 特性，增强了函数组件的能力，使函数�
 
 这样一来，我们就可以不使用 class 组件，只使用函数组件就可以开发复杂的 React 组件。 React 也更推荐使用函数组件， 因为函数组件更加简单，更加易于测试。相比较 class 组件，代码  逻辑分散在各个生命周期函数之中， 代码变得不好理解，也很难测试。
 
-具体可以查看官方文档，官方文档写的很详细：[https://zh-hans.reactjs.org/docs/hooks-intro.html](https://zh-hans.reactjs.org/docs/hooks-intro.html)
+具体可以查看官方 [React Hooks 文档](https://zh-hans.reactjs.org/docs/hooks-intro.html)
+
+---
+
+Vue 其实也是支持函数组件的，但是我在实际项目中没有  用过，Vue 好像也指出了给 template 标记为 functional，在多人协作的时候可能会造成一些混乱。具体请看官网 [函数  式组件](https://cn.vuejs.org/v2/guide/render-function.html#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6) 文档。
