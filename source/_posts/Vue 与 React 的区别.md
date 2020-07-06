@@ -228,4 +228,6 @@ React 16.8 新增了 Hooks 特性，增强了函数组件的能力，使函数�
 
 ---
 
-Vue 其实也是支持函数组件的，但是我在实际项目中没有  用过，Vue 好像也指出了给 template 标记为 functional，在多人协作的时候可能会造成一些混乱。具体请看官网 [函数  式组件](https://cn.vuejs.org/v2/guide/render-function.html#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6) 文档。
+Vue 其实也是支持函数组件的，但是我在实际项目中没有  用过，Vue 好像也指出了给 template 标记为 functional，在多人协作的时候可能会造成一些混乱。具体请看官网文档： [函数式组件](https://cn.vuejs.org/v2/guide/render-function.html#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6)
+
+Vue 3.0 新增了 [Composition API](https://vue-composition-api-rfc.netlify.app/zh/)，也提供了类似 React Hooks 函数式编程的能力。 使得定义组件更加灵活、更加简单。
