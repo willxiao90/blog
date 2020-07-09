@@ -90,7 +90,7 @@
 <p>Vue 与 React 有什么区别？</p>
 </blockquote>
 <p>这是前端开发同学面试时经常遇到的问题。</p>
-<p>我也不例外，我最开始接触的是 React，对 Vue 的理解一直比较片面，感觉 Vue 要学很多 html 指令，很不习惯，也没觉得 Vue 比 React 有什么优势。</p>
+<p>我最开始接触的是 React，对 Vue 的理解一直比较片面，感觉 Vue 要学很多 html 指令，很不习惯，也没觉得 Vue 比 React 有什么优势。</p>
 <p>直到现在，使用了 Vue 一年之后，对 Vue 有了更多感受，也消除了一些刻板印象。</p>
 <p>首先，这两个框架都是非常优秀的单页应用（SPA）开发框架，它们其实非常相似，都有以下特性：</p>
 <ol>
@@ -139,6 +139,15 @@
 <p>刚才讲过 React 的响应式原理，当一个组件的状态发生改变时，React 会重新调用 render() 方法，比较生成的 VDOM 的差别。如果一个子组件的 proos 和 state 都没有改变，React 仍然需要进行一次对比，这个情况就有点儿浪费了。所以 React 提供了 shouldComponentUpdate() 生命周期函数，允许开发者判断什么时候应该更新组件，比如当组件的 props 和 state 都没有改变的时候，shouldComponentUpdate 就可以返回 false，那么 React 就不会再去比较 VDOM 的差异了。</p>
 <p>React.PureComponent 类，实现了 shouldComponentUpdate 方法，会对 props 和 state 进行浅比较，如果没有变化，就返回 false 跳过组件更新。但是它只进行浅比较，所以如果直接修改了 props 或 state 的属性，shouldComponentUpdate 方法还是返回 false，就漏掉了这次更新。所以这种情况下，推荐使用不可变的数据。</p>
 <p>更多信息请看官方文档：<a href="https://zh-hans.reactjs.org/tutorial/tutorial.html#why-immutability-is-important" target="_blank" rel="noopener">为什么不可变性在 React 中非常重要</a></p>
+<h2 id="六、React-对函数组件有更好的支持"><a href="#六、React-对函数组件有更好的支持" class="headerlink" title="六、React 对函数组件有更好的支持"></a>六、React 对函数组件有更好的支持</h2><p>React 发布之初，就支持函数组件，一个无状态的组件，可以使用一个函数表示，函数组件接收一个 props 属性，并返回一个 React 元素。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>React 16.8 新增了 Hooks 特性，增强了函数组件的能力，使函数组件可以使用 state 以及其他 React 特性。</p>
+<p>这样一来，我们就可以不使用 class 组件，只使用函数组件就可以开发复杂的 React 组件。 React 也更推荐使用函数组件，因为函数组件更加简单，更加易于测试。相比较 class 组件，代码逻辑分散在各个生命周期函数之中，代码变得不好理解，也很难测试。</p>
+<p>具体可以查看官方 <a href="https://zh-hans.reactjs.org/docs/hooks-intro.html" target="_blank" rel="noopener">React Hooks 文档</a></p>
+<hr>
+<p>Vue 其实也是支持函数组件的，但是我在实际项目中没有用过，Vue 好像也指出了给 template 标记为 functional，在多人协作的时候可能会造成一些混乱。具体请看官网文档： <a href="https://cn.vuejs.org/v2/guide/render-function.html#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6" target="_blank" rel="noopener">函数式组件</a></p>
+<p>Vue 3.0 新增了 <a href="https://vue-composition-api-rfc.netlify.app/zh/" target="_blank" rel="noopener">Composition API</a>，也提供了类似 React Hooks 函数式编程的能力，使得定义组件更加灵活、更加简单。</p>
 
       
     </div>
