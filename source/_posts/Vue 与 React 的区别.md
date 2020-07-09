@@ -8,7 +8,7 @@ tags: vue, react
 
 这是前端开发同学面试时经常遇到的问题。
 
-我也不例外，我最开始接触的是 React，对 Vue 的理解一直比较片面。感觉 Vue 要学很多 html 指令，很不习惯，也没觉得 Vue 比 React 有什么优势。
+我也不例外，我最开始接触的是 React，对 Vue 的理解一直比较片面，感觉 Vue 要学很多 html 指令，很不习惯，也没觉得 Vue 比 React 有什么优势。
 
 直到现在，使用了 Vue 一年之后，对 Vue 有了更多感受，也消除了一些刻板印象。
 
@@ -18,7 +18,7 @@ tags: vue, react
 2. 组件化（Composable）。一个页面，可以拆分成一棵嵌套的组件树，我们只需要开发一个个组件即可，同一个组件可以在多个地方使用，这样就提升了代码的复用性和可维护性。
 3. 使用了 Virtual DOM。框架在操作真实 DOM 之前，会先在内存中生成虚拟 DOM，最后再批量操作真实 DOM，以提高性能。
 
-我个人理解，它们最大的差别是响应式原理不同，组件的定义方式和 state 状态管理也有一些差别。
+我个人理解，它们最大的差别是响应式原理不同，组件的定义方式和 操作状态的方式也有一些差别。
 
 ## 一、响应式原理不同
 
@@ -49,43 +49,43 @@ Vue 的响应式，是使用观察者模式实现的。Vue 会遍历 data 数据
 
 React 的响应式，是使用 diff 算法实现的。React 在 state 或 props 改变时，会调用 render() 方法，生成一个虚拟 DOM 树，React 会将这棵树与上一次生成的树进行比较，找出其中的差异，并更新差异的部分。
 
-比较两棵树，找出其中的差异，并生产一个做小操作数。这个算法的复杂度比较高，是 O(n 3 )，React 为了提高性能， 提出了一套复杂度为 O(n) 的优化算法， 这个算法有两个重要的假设：
+比较两棵树，找出其中的差异，并生成一个做小操作数。这个算法的复杂度比较高，是 O(n 3 )，React 为了提高性能，提出了一套复杂度为 O(n) 的优化算法，这个算法有两个重要的假设：
 
-1. 两个不同类型的元素会产生出不同的树。当根节点元素类型发生改变时，React 会销毁旧节点创建新节点。比如当一个元素从 `<Button>` 变成 `<div>`，或者 `<ComponentA>` 变成 `<ComponentB>`。当元素类型相同时，React 会保留 DOM 节点，仅比较并更新有改变的属性。如果元素有子节点，React 会递归比较  子节点。
-2. 当元素类型相同时，开发者可以使用 key 属性来标识元素的唯一性。比如一个列表， 有多个相同类型的子节点，当子节点顺序发生改变是，如果没有一个唯一标识，就有可能产生比较多的操作数。React 引入 key 属性作为唯一标识，就是为了解决这个问题。
+1. 两个不同类型的元素会产生出不同的树。当根节点元素类型发生改变时，React 会销毁旧节点创建新节点，比如当一个元素从 `<Button>` 变成 `<div>`，或者 `<ComponentA>` 变成 `<ComponentB>`。当元素类型相同时，React 会保留 DOM 节点，仅比较并更新有改变的属性。如果元素有子节点，React 会递归比较子节点。
+2. 当元素类型相同时，开发者可以使用 key 属性来标识元素的唯一性。比如一个列表， 有多个相同类型的子节点，当子节点顺序发生改变时，如果没有一个唯一标识，就有可能产生比较多的操作数。React 引入 key 属性作为唯一标识，就是为了解决这个问题。
 
-关于 React 的  diff 算法，官方文档写的很清楚 ，我就不多说了。 详情请看：[https://zh-hans.reactjs.org/docs/reconciliation.html](https://zh-hans.reactjs.org/docs/reconciliation.html)
+关于 React 的 diff 算法，官方文档写的很清楚，详情请看：[https://zh-hans.reactjs.org/docs/reconciliation.html](https://zh-hans.reactjs.org/docs/reconciliation.html)
 
-##  二、Vue 推荐使用 template 方式定义组件，React 推荐使用 JSX
+## 二、Vue 推荐使用 template 定义组件，React 推荐使用 JSX
 
-Vue 推荐使用 template 的方式定义组件，因为这样更接近原生 html，可以在不破坏原有 html 代码的基础上引入 Vue 的能力。Vue 的组件也  参考了一些 Web Component 的规范，Vue 的组件可以很容易打包成 Web Component。
+Vue 推荐使用 template 的方式定义组件，因为这样更接近原生 html，可以在不破坏原有 html 代码的基础上引入 Vue 的能力。Vue 的组件也参考了一些 Web Component 的规范，Vue 的组件可以很容易打包成 Web Component。
 
-React 推荐使用 JSX，JSX 是使用 JS 的语法来编写 html 代码，所以一些流程控制，数据绑定也会更加方便些。JSX  不依赖模版，所以出现了 React Native 这样的  跨平台  框架。
+React 推荐使用 JSX，JSX 是使用 JS 的语法来编写 html 代码，所以一些流程控制，数据绑定也会更加方便。也不需要再学一套模板语法。
 
 事实上 Vue 也提供了 JSX 的支持，不过 Vue 更推荐 template 的方式。
 
-## 三、Vue 可以直接修改状态，React 必须通过 setState() 更新状态
+## 三、Vue 可以直接修改状态，React 必须通过 setState() 更新状态
 
 这个区别其实也是因为它们的响应式原理不同。
 
 Vue 数据属性变更时，会自动通知所有用到了这个属性的子组件，调用它们的 updateComponent 方法更新组件，所以 Vue 直接修改数据属性组件也会正确更新。
 
-React 调用 setState() 方法，组件会自动执行 render() 方法重新渲染。但是直接修改 state，不会调用 render() 方法，组件不会更新，除非调用 forceUpdate() 强制更新组件。
+React 调用 setState() 方法，组件会自动执行 render() 方法重新渲染。但是直接修改 state，不会调用 render() 方法，组件不会更新，除非调用 forceUpdate() 强制更新组件。
 
 ## 四、Vue 支持双向数据绑定，React 只允许单向数据流
 
-Vue 提供了 v-model 指令，可以进行双向数据绑定。不过 v-model 其实只是一个语法糖，它的本质是  绑定 value 属性，并监听 input 事件，当 input 有新的  内容时更新 value 属性。
+Vue 提供了 v-model 指令，可以进行双向数据绑定。不过 v-model 其实只是一个语法糖，它的本质是 绑定 value 属性，并监听 input 事件，当 input 有新的内容时更新 value 属性。
 
-当 v-model  绑定一个对象时，Vue 允许子组件直接修改对象属性，得益于 Vue 的响应式原理，父组件中的用到对象属性的地方也会自动更新。
+当 v-model 绑定一个对象时，Vue 允许子组件直接修改对象属性。得益于 Vue 的响应式原理，在子组件中修改父组件的对象属性，父组件中的用到这个对象属性的地方也会自动更新。
 
-例如，有一个很长  的表单，字段  实在太多了，我们就需要把这个组件拆分为更小的子组件，这个时候，我们可以利用状态提升的技巧， 把状态都  放在父组件里面，然后把父组件的状态对象使用 v-model 指令绑定给子组件，在子组件中就可以直接修改父组件的对象  属性。
+例如，有一个很长的表单，字段实在太多了，我们就需要把这个组件拆分为更小的子组件，这个时候，我们可以利用状态提升的技巧，把状态都放在父组件里面，然后把父组件的状态对象使用 v-model 指令绑定给子组件，在子组件中就可以直接修改父组件的对象属性。
 
 ```html
 <template>
   <form>
     <base-info v-model="form" />
     <company-info v-model="form.companyInfo" />
-    <education-info v-model="form.educationInfo" />
+    <education-info v-model="form.educationInfo" />
   </form>
 </template>
 
@@ -97,16 +97,16 @@ Vue 提供了 v-model 指令，可以进行双向数据绑定。不过 v-model �
           name: '',
           gender: 0,
           age: 18,
-          email: '',
           phone: '',
+          email: '',
           address1: '',
           address2: '',
-          companyInfo: {
+          companyInfo: {
             name: '',
             tel: '',
             address: ''
           },
-          educationInfo: {
+          educationInfo: {
             college: '',
             profession: '',
             graduateAt: ''
@@ -121,7 +121,7 @@ Vue 提供了 v-model 指令，可以进行双向数据绑定。不过 v-model �
 
 ---
 
-React 只允许单向数据流，React 认为这样虽然麻烦一点儿，但是显式声明的方法更有助于人们理解程序的运作方式，不容易引入 bug。
+React 只允许单向数据流，React 认为这样虽然麻烦一点儿，但是显式声明的方法更有助于人们理解程序的运作方式，不容易引入 bug。
 
 上面的例子，如果使用 React 的写法，需要将修改父组件状态的方法传递给子组件，在子组件中调用。
 
@@ -132,7 +132,8 @@ class Person extends Component {
 
     this.state = {
       name: '',
-      gender: 1,
+      gender: 0,
+      age: 18,
       phone: '',
       email: '',
       address1: '',
@@ -171,8 +172,8 @@ class Person extends Component {
   updateEducationInfo(prop, value) {
     this.setState((state) => {
       ...state,
-      educationInfo: {
-        ...state.educationInfo,
+      educationInfo: {
+        ...state.educationInfo,
         {prop: value}
       }
     });
@@ -184,7 +185,7 @@ class Person extends Component {
       <form>
         <baseInfo data={form} update={updateBaseInfo} />
         <companyInfo data={form.companyInfo} update={updateCompanyInfo} />
-        <educationInfo data={form.educationInfo} update={updateEducationInfo} />
+        <educationInfo data={form.educationInfo} update={updateEducationInfo} />
       </form>
     )
   }
@@ -193,7 +194,7 @@ class Person extends Component {
 
 ## 五、React 推荐使用不可变的数据
 
-所谓不可变的数据，就是  当我们要改变一个  数据对象时，不要直接修改原数据对象，而是返回一个新的数据对象。比如使用 Object.assign() 方法修改数据属性:
+所谓不可变的数据，就是当我们要改变一个数据对象时，不要直接修改原数据对象，而是返回一个新的数据对象。比如使用 Object.assign() 方法修改数据属性:
 
 ```javascript
 const data = {
@@ -204,8 +205,10 @@ const data = {
 const newData = Object.assign({}, data, { color: "blue" });
 ```
 
-之所以推荐使用不可变的数据，一个原因  是使用不可变的数据，可以更容易的实现“时间旅行 ”功能。但是更重要的一个  原因是可以更容易的实现 pure component。
+之所以推荐使用不可变的数据，一个原因是使用不可变的数据，可以更容易的实现“时间旅行”功能。但是更重要的一个原因是可以更容易的实现 pure component。
 
- 刚才  讲过 React 的响应式原理，当一个组件的状态发生改变时，React 会重新调用 render() 方法，比较生成的 VDOM 的差别。如果一个子组件的 proos 和 state 都没有改变，React  仍然需要  进行一次  对比，这个情况就  有点儿浪费了。所以 React 提供了 shouldComponentUpdate() 生命周期函数， 允许开发者判断什么时候应该更新组件，比如当组件的 props 和 state 都没有改变的时候，shouldComponentUpdate 就可以返回 false，那么 React 就不会再去比较 VDOM 的差异了。
+刚才讲过 React 的响应式原理，当一个组件的状态发生改变时，React 会重新调用 render() 方法，比较生成的 VDOM 的差别。如果一个子组件的 proos 和 state 都没有改变，React 仍然需要进行一次对比，这个情况就有点儿浪费了。所以 React 提供了 shouldComponentUpdate() 生命周期函数，允许开发者判断什么时候应该更新组件，比如当组件的 props 和 state 都没有改变的时候，shouldComponentUpdate 就可以返回 false，那么 React 就不会再去比较 VDOM 的差异了。
 
-React.PureComponent 类，实现了 shouldComponentUpdate 方法，会对 props 和 state 进行浅比较，如果没有变化，就返回 false 跳过组件更新。但是它只进行浅比较，所以如果直接修改了 props 或 state 的属性，shouldComponentUpdate 方法还是返回 false，就  漏掉了这次更新。所以这种情况下，推荐使用不可变的数据。
+React.PureComponent 类，实现了 shouldComponentUpdate 方法，会对 props 和 state 进行浅比较，如果没有变化，就返回 false 跳过组件更新。但是它只进行浅比较，所以如果直接修改了 props 或 state 的属性，shouldComponentUpdate 方法还是返回 false，就漏掉了这次更新。所以这种情况下，推荐使用不可变的数据。
+
+更多信息请看官方文档：[为什么不可变性在 React 中非常重要](https://zh-hans.reactjs.org/tutorial/tutorial.html#why-immutability-is-important)
