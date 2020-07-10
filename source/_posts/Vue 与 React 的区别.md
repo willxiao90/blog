@@ -1,7 +1,7 @@
 ---
 title: Vue 与 React 的区别
 date: 2020-06-29 10:19:26
-tags: vue, react
+tags: [vue, react]
 ---
 
 > Vue 与 React 有什么区别？
@@ -18,7 +18,7 @@ tags: vue, react
 2. 组件化（Composable）。一个页面，可以拆分成一棵嵌套的组件树，我们只需要开发一个个组件即可，同一个组件可以在多个地方使用，这样就提升了代码的复用性和可维护性。
 3. 使用了 Virtual DOM。框架在操作真实 DOM 之前，会先在内存中生成虚拟 DOM，最后再批量操作真实 DOM，以提高性能。
 
-我个人理解，它们最大的差别是响应式原理不同，组件的定义方式和 操作状态的方式也有一些差别。
+我个人理解，它们最大的差别是响应式原理不同，组件的定义方式和操作状态的方式也有一些差别。
 
 ## 一、响应式原理不同
 
@@ -143,7 +143,7 @@ class Person extends Component {
         tel: '',
         address: ''
       },
-      educationInfo: {
+      educationInfo: {
         college: '',
         profession: '',
         graduateAt: ''
