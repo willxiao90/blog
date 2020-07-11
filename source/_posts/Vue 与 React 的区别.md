@@ -55,6 +55,8 @@ React 的响应式，是使用 diff 算法实现的。React 在 state 或 props 
 
 上图是 React 官网的例子，图中 C2 和 C7 组件的 shouldComponentUpdate 方法就返回 false，所以直接跳过了 vDOMEq 的比较。
 
+关于 React 的 diff 算法，官方文档写的很清楚，详情请看：[https://zh-hans.reactjs.org/docs/reconciliation.html](https://zh-hans.reactjs.org/docs/reconciliation.html)
+
 ## 二、Vue 推荐使用 template 定义组件，React 推荐使用 JSX
 
 Vue 推荐使用 template 的方式定义组件，因为这样更接近原生 html，可以在不破坏原有 html 代码的基础上引入 Vue 的能力。Vue 的组件也参考了一些 Web Component 的规范，Vue 的组件可以很容易打包成 Web Component。
