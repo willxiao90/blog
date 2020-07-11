@@ -18,7 +18,7 @@ tags: [vue, react]
 2. 组件化（Composable）。一个页面，可以拆分成一棵嵌套的组件树，我们只需要开发一个个组件即可，同一个组件可以在多个地方使用，这样就提升了代码的复用性和可维护性。
 3. 使用了 Virtual DOM。框架在操作真实 DOM 之前，会先在内存中生成虚拟 DOM，最后再批量操作真实 DOM，以提高性能。
 
-我个人理解，它们最大的差别是响应式原理不同，组件的定义方式和操作状态的方式也有一些差别。
+我个人理解，它们最大的差别是响应式原理不同，组件的定义方式也有比较大的区别。
 
 ## 一、响应式原理不同
 
@@ -49,12 +49,11 @@ Vue 的响应式，是使用观察者模式实现的。Vue 会遍历 data 数据
 
 React 的响应式，是使用 diff 算法实现的。React 在 state 或 props 改变时，会调用 render() 方法，生成一个虚拟 DOM 树，React 会将这棵树与上一次生成的树进行比较，找出其中的差异，并更新差异的部分。
 
-比较两棵树，找出其中的差异，并生成一个做小操作数。这个算法的复杂度比较高，是 O(n 3 )，React 为了提高性能，提出了一套复杂度为 O(n) 的优化算法，这个算法有两个重要的假设：
+这个过程是递归的，React 会以当前组件为根，递归比较所以子节点。为了优化性能，React 提供了 shouldComponentUpdate 生命周期方法，如果这个方法返回 false，React 就跳过这个组件，不做 VDOM 比较，也不更新组件。
 
-1. 两个不同类型的元素会产生出不同的树。当根节点元素类型发生改变时，React 会销毁旧节点创建新节点，比如当一个元素从 `<Button>` 变成 `<div>`，或者 `<ComponentA>` 变成 `<ComponentB>`。当元素类型相同时，React 会保留 DOM 节点，仅比较并更新有改变的属性。如果元素有子节点，React 会递归比较子节点。
-2. 当元素类型相同时，开发者可以使用 key 属性来标识元素的唯一性。比如一个列表， 有多个相同类型的子节点，当子节点顺序发生改变时，如果没有一个唯一标识，就有可能产生比较多的操作数。React 引入 key 属性作为唯一标识，就是为了解决这个问题。
+![https://zh-hans.reactjs.org/static/5ee1bdf4779af06072a17b7a0654f6db/cd039/should-component-update.png](https://zh-hans.reactjs.org/static/5ee1bdf4779af06072a17b7a0654f6db/cd039/should-component-update.png)
 
-关于 React 的 diff 算法，官方文档写的很清楚，详情请看：[https://zh-hans.reactjs.org/docs/reconciliation.html](https://zh-hans.reactjs.org/docs/reconciliation.html)
+上图是 React 官网的例子，图中 C2 和 C7 组件的 shouldComponentUpdate 方法就返回 false，所以直接跳过了 vDOMEq 的比较。
 
 ## 二、Vue 推荐使用 template 定义组件，React 推荐使用 JSX
 
@@ -66,7 +65,7 @@ React 推荐使用 JSX，JSX 是使用 JS 的语法来编写 html 代码，所�
 
 ## 三、Vue 可以直接修改状态，React 必须通过 setState() 更新状态
 
-这个区别其实也是因为它们的响应式原理不同。
+**这个区别其实也是因为它们的响应式原理不同。**
 
 Vue 数据属性变更时，会自动通知所有用到了这个属性的子组件，调用它们的 updateComponent 方法更新组件，所以 Vue 直接修改数据属性组件也会正确更新。
 
@@ -193,6 +192,8 @@ class Person extends Component {
 ```
 
 ## 五、React 推荐使用不可变的数据
+
+**这一点也是因为响应式原理不同。**
 
 所谓不可变的数据，就是当我们要改变一个数据对象时，不要直接修改原数据对象，而是返回一个新的数据对象。比如使用 Object.assign() 方法修改数据属性:
 
