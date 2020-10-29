@@ -1,3 +1,9 @@
+---
+title: electron-vue 开发经验总结
+date: 2020-10-29 18:14:15
+tags: [electron, electron-vue]
+---
+
 > 最近公司让我开发一个桌面报警器，以解决浏览器页面关闭无法播放报警声音的问题。
 > 
 > 接到这个项目，自然的选择了 [electron-vue](https://simulatedgreg.gitbooks.io/electron-vue/content/cn/) 进行开发（我们公司使用的 vue）
