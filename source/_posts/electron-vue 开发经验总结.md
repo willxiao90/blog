@@ -226,7 +226,7 @@ logger.fatal('Cheese was breeding ground for listeria.')
 
 ## 四、其他问题
 
-1. 修改系统托盘图标，下面代码参考了：[https://juejin.im/post/6844903872905871373](https://juejin.im/post/6844903872905871373)
+1.修改系统托盘图标，下面代码参考了：[https://juejin.im/post/6844903872905871373](https://juejin.im/post/6844903872905871373)
 
 ``` javascript
 let tray;
@@ -282,14 +282,14 @@ function createTray() {
 }
 ```
 
-2. 播放声音
+2.播放声音
 ``` javascript
 audio = new Audio('static/alarm.wav');
 audio.play(); // 开始播放
 audio.pause(); // 暂停
 ```
 
-3. 显示通知消息
+3.显示通知消息
 
 ``` javascript
 const notify = new Notification('标题', {
@@ -306,7 +306,7 @@ notify.onclick = () => {
 };
 ```
 
-4. 隐藏顶部菜单栏
+4.隐藏顶部菜单栏
 
 ``` javascript
 import { Menu } from 'electron'
