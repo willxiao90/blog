@@ -1,4 +1,4 @@
-> 最近公司让我开发一个桌面报警器，以解决浏览器页面关闭无法进行报警声音播放的问题。
+> 最近公司让我开发一个桌面报警器，以解决浏览器页面关闭无法播放报警声音的问题。
 > 
 > 接到这个项目，自然的选择了 [electron-vue](https://simulatedgreg.gitbooks.io/electron-vue/content/cn/) 进行开发（我们公司使用的 vue）
 > 
@@ -58,7 +58,7 @@ import './path/to/your/store' // 需要在主进程引入 store ，否则状态�
 
 另外，使用 createSharedMutations 中间件，必须使用 dispatch 或 mapActions 更新状态，不能使用 commit 。
 
-阅读 vuex-electron 的源代码，发现渲染进程对 dispatch 进行了重写，dispatch 只是通知主进程，而不实际更新 store，主进程收到 action 之后，立即更新自己的 store，主进程 store 更新成功之后，会通知所有的渲染进程，这个时候渲染进程才调用 originalCommit 更新自己的 store。这样就完成了整个状态同步过程。
+阅读 vuex-electron 的源代码，发现渲染进程对 dispatch 进行了重写，dispatch 只是通知主进程，而不实际更新 store，主进程收到 action 之后，立即更新自己的 store，主进程 store 更新成功之后，会通知所有的渲染进程，这个时候渲染进程才调用 originalCommit 更新自己的 store。
 
 ``` javascript
 rendererProcessLogic() {
@@ -121,7 +121,7 @@ mainProcessLogic() {
 }
 ```
 
-注意，渲染进程真正更新 store 用的 originalCommit 方法，而不是 originalDispatch 方法，也就是说每一个 mutations 都需要写一个同名的 actions 方法，接收相同的 action，如下面的官方样例：
+注意，渲染进程真正更新 store 用的 originalCommit 方法，而不是 originalDispatch 方法，其实 originalDispatch 只是个代理，每一个 mutations 都需要写一个同名的 actions 方法，接收相同的参数，如下面的官方样例：
 
 ``` javascript
 import Vue from "vue"
@@ -139,7 +139,7 @@ export default new Vuex.Store({
   actions: {
     increment(store) {
       // 按照推理，这里的 commit 其实不起作用，不是必须
-      // 关键是要有同名的 mutation
+      // 关键是名称相同
       store.commit("increment")
     },
     decrement(store) {
@@ -180,14 +180,14 @@ log.info('client 启动成功');
 ``` javascript
 import log from 'electron-log';
  
- // 覆盖 log、error、debug 三个方法
+ // 覆盖 console 的 log、error、debug 三个方法
 console.log = log.log;
 Object.assign(console, {
   error: log.error,
   debug: log.debug,
 });
 
-// 之后，就可以调用 console 的方法记录日志了
+// 之后，就可以直接使用 console 收集日志
 console.error('客户端错误')
 ```
 
