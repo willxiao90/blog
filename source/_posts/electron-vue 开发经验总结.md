@@ -174,11 +174,13 @@ export default new Vuex.Store({
 日志我采用的是 [electron-log](https://github.com/megahertz/electron-log)，也可以用 [log4js](https://github.com/log4js-node/log4js-node)
 
 在主进程中使用 electron-log 很简单，直接引入，调用 info 等方法即可。
+electron-log 提供了 error, warn, info, verbose, debug, silly 六种级别的日志，默认都是开启。
 
 ``` javascript
 import log from 'electron-log';
  
 log.info('client 启动成功');
+log.error('主进程出错');
 ```
 
 在渲染进程使用 electron-log，可以覆盖 console.log 等方法，这样就不用到处引入 electron-log 了，需要写日志的地方直接使用 console.log 等方法即可。
@@ -194,7 +196,7 @@ Object.assign(console, {
 });
 
 // 之后，就可以直接使用 console 收集日志
-console.error('客户端错误')
+console.error('渲染进程出错')
 ```
 
 electron-log 默认会打印到 console 控制台，并写入到本地文件，本地文件路径如下：
