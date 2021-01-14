@@ -24,26 +24,9 @@ tags: [vue, react]
 
 Vue 的响应式，是使用观察者模式实现的。Vue 会遍历 data 数据对象，使用 Object.defineProperty() 将每个属性都转换为 getter/setter。
 
-每个 Vue 组件实例都对应一个  watcher  实例，在组件渲染（render）过程中时，watcher 实例会记录哪些子组件用到了（getter）哪些数据属性。当数据属性发生改变时，会触发 setter 方法，watcher 实例会通知所有用到了这个数据属性的子组件，调用该子组件的 updateComponent 方法更新组件。
+每个 Vue 组件实例都有一个  watcher  实例，在组件初次渲染（render）时，会记录组件用到了（调用 getter）哪些数据。当数据发生改变时，会触发 setter 方法，并通知所有依赖这个数据的 watcher 实例，然后 watcher 实例调用对应组件的 render 方法，生成一颗新的 vdom 树，Vue 会将新生成的 vdom 树与上一次生成的 vdom 树进行比较（diff），来决定具体要更新哪些 dom。
 
 ![](https://cn.vuejs.org/images/data.png)
-
-例如，一个 TodoList 组件，代码结构如下：
-
-```html
-<template>
-  <div>
-    <todo-items :items="items" />
-    <add-todo v-model="text" :count="items.length + 1" />
-  </div>
-</template>
-```
-
-在这个组件渲染过程中，watcher 会记录 TodoItems 子组件用到了 items 数据属性，AddTodo 子组件用到了 text 和 items 数据属性。
-
-当 text 数据属性发生改变时，watcher 就会通知用到了 text 数据属性的所有子组件，这里只有 AddTodo 一个组件，所以 Vue 就只更新 AddTodo 这一个组件。
-
-同理，当 items 数据属性发生改变时，Vue 就会更新 TodoItems 和 AddTodo 两个组件。
 
 ---
 
