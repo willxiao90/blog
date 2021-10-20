@@ -114,7 +114,8 @@
 <h2 id="二、Vue-推荐使用-template-定义组件，React-推荐使用-JSX"><a href="#二、Vue-推荐使用-template-定义组件，React-推荐使用-JSX" class="headerlink" title="二、Vue 推荐使用 template 定义组件，React 推荐使用 JSX"></a>二、Vue 推荐使用 template 定义组件，React 推荐使用 JSX</h2><p>Vue 推荐使用 template 的方式定义组件，因为这样更接近原生 html，可以在不破坏原有 html 代码的基础上引入 Vue 的能力。Vue 的组件也参考了一些 Web Component 的规范，Vue 的组件可以很容易打包成 Web Component。</p>
 <p>React 推荐使用 JSX，JSX 是使用 JS 的语法来编写 html 代码，所以一些流程控制，数据绑定也会更加方便。也不需要再学一套模板语法。</p>
 <p>事实上 Vue 也提供了 JSX 的支持，不过 Vue 更推荐 template 的方式。</p>
-<h2 id="三、React-推荐使用不可变的数据"><a href="#三、React-推荐使用不可变的数据" class="headerlink" title="三、React 推荐使用不可变的数据"></a>三、React 推荐使用不可变的数据</h2><p>所谓不可变的数据，就是当我们要改变一个数据对象时，不要直接修改原数据对象，而是返回一个新的数据对象。比如使用 Object.assign() 方法修改数据属性:</p>
+<h2 id="三、React-推荐使用不可变的数据"><a href="#三、React-推荐使用不可变的数据" class="headerlink" title="三、React 推荐使用不可变的数据"></a>三、React 推荐使用不可变的数据</h2><p>这一点对于从 Vue 转换到 React 的同学，需要特别注意。</p>
+<p>所谓不可变的数据，就是当我们要改变一个数据对象时，不要直接修改原数据对象，而是返回一个新的数据对象。比如使用 Object.assign() 方法修改数据属性:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = &#123;</span><br><span class="line">  fontSize: <span class="number">14</span>,</span><br><span class="line">  color: <span class="string">"black"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newData = <span class="built_in">Object</span>.assign(&#123;&#125;, data, &#123; <span class="attr">color</span>: <span class="string">"blue"</span> &#125;);</span><br></pre></td></tr></table></figure>
 
 <p>之所以推荐使用不可变的数据，一个原因是使用不可变的数据，可以更容易的实现“时间旅行”功能。但是更重要的一个原因是可以更容易的实现 pure component。</p>
