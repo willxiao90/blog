@@ -97,15 +97,15 @@
 <p>版本1的UUID是根据时间和节点ID（通常是MAC地址）生成；</p>
 <p>版本3、版本5透过对命名空间（namespace）标识符和名称进行散列生成确定性的UUID；</p>
 <p>版本4的UUID则使用随机性或伪随机性生成。</p>
-<p><img src="/images/image.png" alt="Alt text"></p>
+<p><img src="/blog/images/image.png" alt="Alt text"></p>
 <p>它的冲突概率非常小，以版本4的UUID为例，如果要有50%的几率至少发生一次冲突，需要生成至少 2.71E18 个UUID。计算如下：</p>
-<p><img src="/images/image-1.png" alt="Alt text"></p>
+<p><img src="/blog/images/image-1.png" alt="Alt text"></p>
 <p>这个数字相当于每秒产生 10 亿个 UUID 持续 85 年。</p>
 <p>现代的浏览器提供了 crypto.randomUUID() 方法，可以非常方便的生成一个版本4的UUID。</p>
 <p>或者你也可以使用第三方库 uuid 来生成 v1、v3、v4、v5 版本的 UUID。</p>
 <h2 id="nanoid"><a href="#nanoid" class="headerlink" title="nanoid"></a>nanoid</h2><p>nanoid 是 UUID 的有力竞争者，它同样可以生成唯一的标识字符串。</p>
 <p>与 UUID 相比，它使用更大的字母表，这样一来它生成的字符串长度更短，只有21个字符，并且它的包体积只有UUID的1/4。nanoid 大有取代 UUID 的趋势。</p>
-<p><img src="/images/image-2.png" alt="Alt text"></p>
+<p><img src="/blog/images/image-2.png" alt="Alt text"></p>
 <p>另外，nanoid 可以自定义字母表和ID长度，这给用户提供了更多灵活性。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; customAlphabet &#125; <span class="keyword">from</span> <span class="string">'nanoid'</span></span><br><span class="line"><span class="keyword">const</span> nanoid = customAlphabet(<span class="string">'1234567890abcdef'</span>, <span class="number">10</span>)</span><br><span class="line">model.id = nanoid() <span class="comment">//=&gt; "4f90d13a42"</span></span><br></pre></td></tr></table></figure>
 
