@@ -27,11 +27,11 @@ UUID按照标准方法生成时，在实际应用中具有唯一性，且不依�
 
 版本4的UUID则使用随机性或伪随机性生成。
 
-![Alt text](/images/image.png)
+![Alt text](/blog/images/image.png)
 
 它的冲突概率非常小，以版本4的UUID为例，如果要有50%的几率至少发生一次冲突，需要生成至少 2.71E18 个UUID。计算如下：
 
-![Alt text](/images/image-1.png)
+![Alt text](/blog/images/image-1.png)
 
 这个数字相当于每秒产生 10 亿个 UUID 持续 85 年。
 
@@ -45,7 +45,7 @@ nanoid 是 UUID 的有力竞争者，它同样可以生成唯一的标识字符�
 
 与 UUID 相比，它使用更大的字母表，这样一来它生成的字符串长度更短，只有21个字符，并且它的包体积只有UUID的1/4。nanoid 大有取代 UUID 的趋势。
 
-![Alt text](/images/image-2.png)
+![Alt text](/blog/images/image-2.png)
 
 另外，nanoid 可以自定义字母表和ID长度，这给用户提供了更多灵活性。
 

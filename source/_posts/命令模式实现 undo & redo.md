@@ -10,7 +10,7 @@ tags: [设计模式, 命令模式]
 
 首先，我们来看一下命令模式的结构示意图。
 
-![alt text](/images/cc2f4b0283e74a8fa5cdaeb85c2837d1.png)
+![alt text](/blog/images/cc2f4b0283e74a8fa5cdaeb85c2837d1.png)
 
 在命令模式中，关键是定义了一个 Command 接口，它有 execute 和 undo 两个方法，具体的命令类都需要实现这两个方法。调用者（Invoker）在调用命令的时候，只需要执行命令对象的 execute 和 undo 方法即可，而不用关心这两个方法具体做了什么。实际上这两方法的具体实现，通常都是在接收者（Receiver）中，命令类中通常有一个接收者实例，命令类只需要调用接收者实例方法即可。
 
