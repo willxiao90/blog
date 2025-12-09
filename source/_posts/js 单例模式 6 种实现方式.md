@@ -24,7 +24,7 @@ const Singleton = {
 Singleton.method();
 ```
 
-`javascript` 可以使用对象字面量快速创建一个对象，创建的对象本身就是单例。这种方式最为简单，但是需要注意 `this` 的引用可能出问题。
+JavaScript  可以使用对象字面量快速创建一个对象，创建的对象本身就是单例。这种方式最为简单，但是需要注意 `this` 的引用可能出问题。
 
 为了解决 `this` 的问题，可以直接引用单例对象本身。
 
@@ -109,7 +109,7 @@ const s2 = Singleton.getInstance();
 console.log(s1 === s2); // true
 ```
 
-`typescript` 版本抽取 `getInstance` 方法，让代码更可读。使用 `private` 关键字实现私有属性和方法，保证代码不会被随意篡改。
+typescript 版本抽取 `getInstance` 方法，让代码更可读。使用 `private` 关键字实现私有属性和方法，保证代码不会被随意篡改。
 
 ## 5.ES6 模块模式的单例
 
