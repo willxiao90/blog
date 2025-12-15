@@ -8,11 +8,15 @@ tags: [设计模式, 命令模式]
 
 下面以一个低代码编辑器的例子，来介绍 JavaScript 是如何使用命令模式来实现 undo & redo 功能的。
 
+## 命令模式定义
+
 首先，我们来看一下命令模式的结构示意图。
 
 ![alt text](/blog/images/cc2f4b0283e74a8fa5cdaeb85c2837d1.png)
 
 在命令模式中，关键是定义了一个 Command 接口，它有 execute 和 undo 两个方法，具体的命令类都需要实现这两个方法。调用者（Invoker）在调用命令的时候，只需要执行命令对象的 execute 和 undo 方法即可，而不用关心这两个方法具体做了什么。实际上这两方法的具体实现，通常都是在接收者（Receiver）中，命令类中通常有一个接收者实例，命令类只需要调用接收者实例方法即可。
+
+## 命令模式实现
 
 OK，我们来看一下，我们的低代码编辑器的状态库（简化版的）。它是使用 zustand 定义的，它有一个组件列表 componentList，以及相关的3个方法。
 
@@ -218,9 +222,10 @@ cmdManager.undo();
 // [{"id":102,"componentName":"Comp2","props":{},"children":null},{"id":101,"componentName":"Comp1","props":{},"children":null}]
 ```
 
-&#x20;至此，我们已经完成了完整的第一个版本了。但是代码还有优化的空间，我们继续改进一下。
+## 继续优化
+上面，我们已经完成了完整的第一个版本了。但是代码还有优化的空间，我们继续改进一下。
 
-第一点，执行命令的地方，要手动 new 命令类，传入 store 状态库，有较多的模板代码。
+1、执行命令的地方，要手动 new 命令类，传入 store 状态库，有较多的模板代码。
 
 ```javascript
 cmdManager.execute(new AddComponentCommand(store, comp1));
@@ -303,7 +308,7 @@ executeCommand("updateComponentProps", comp1, { visible: true });
 executeCommand("undo");
 ```
 
-第二点，CommandManager 其实使用一个栈（Stack）加上指针也可以实现，我们参考了网上的代码（[JavaScript command pattern for undo and redo](https://developer.s24.com/blog/js-command-pattern-for-undo-and-redo.html)），优化之后代码如下：
+2、CommandManager 其实使用一个栈（Stack）加上指针也可以实现，我们参考了网上的代码（[JavaScript command pattern for undo and redo](https://developer.s24.com/blog/js-command-pattern-for-undo-and-redo.html)），优化之后代码如下：
 
 ```javascript
 class CommandManager {
@@ -339,9 +344,7 @@ class CommandManager {
 export default new CommandManager();
 ```
 
-OK，这就是我们的第二个版本了。
-
-参考资料：
+## 参考资料
 
 《Head First 设计模式 - 命令模式》
 
