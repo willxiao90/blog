@@ -1,5 +1,5 @@
 ---
-title: UUID 全局唯一标识
+title:  重新认识 UUID 全局唯一标识
 date: 2024-1-12 21:24:15
 tags: [uuid, 全局唯一标识]
 ---
