@@ -1,7 +1,7 @@
 ---
-title:  重新认识 UUID 全局唯一标识
+title:  前端 UUID 生成 3 种方案
 date: 2024-1-12 21:24:15
-tags: [uuid, 全局唯一标识]
+tags: [uuid]
 ---
 
 ## UUID
@@ -10,42 +10,21 @@ UUID 通用唯一识别码（Universally Unique Identifier）是用于计算机�
 
 UUID按照标准方法生成时，在实际应用中具有唯一性，且不依赖中央机构的注册和分配。UUID重复的概率接近零，可以忽略不计。
 
-因此，UUID 的应用非常普遍，例如被用作分布式数据库表的主键，微软的GUID(Globals Unique Identifiers)等等。
+因此，UUID 的应用非常普遍，被广泛应用于需要对数据记录、资源和实体进行唯一标识的众多应用中：数据库、资源标识符、会话和事务标识符、对象存储等。
 
-在其规范的文本表示中，UUID 的 16 个 8 位字节表示为 32 个十六进制数字，由连字符 '-' 分隔成五组显示，形式为“8-4-4-4-12”总共 36 个字符（32 个十六进制数字和 4 个连字符）。例如：
-```
-123e4567-e89b-12d3-a456-426655440000
-00000000-0000-0000-0000-000000000000
-```
+前端可以使用 uuidjs 库实现：[https://github.com/uuidjs/uuid](https://github.com/uuidjs/uuid)
 
-
-它有多个不同的版本，比较常用的有v1、v3、v4、v5：
-
-版本1的UUID是根据时间和节点ID（通常是MAC地址）生成；
-
-版本3、版本5透过对命名空间（namespace）标识符和名称进行散列生成确定性的UUID；
-
-版本4的UUID则使用随机性或伪随机性生成。
-
-![Alt text](/blog/images/image.png)
-
-它的冲突概率非常小，以版本4的UUID为例，如果要有50%的几率至少发生一次冲突，需要生成至少 2.71E18 个UUID。计算如下：
-
-![Alt text](/blog/images/image-1.png)
-
-这个数字相当于每秒产生 10 亿个 UUID 持续 85 年。
-
-现代的浏览器提供了 crypto.randomUUID() 方法，可以非常方便的生成一个版本4的UUID。
-
-或者你也可以使用第三方库 uuid 来生成 v1、v3、v4、v5 版本的 UUID。
+![Alt text](/blog/images/image-3.png)
 
 ## nanoid
 
 nanoid 是 UUID 的有力竞争者，它同样可以生成唯一的标识字符串。
 
-与 UUID 相比，它使用更大的字母表，这样一来它生成的字符串长度更短，只有21个字符，并且它的包体积只有UUID的1/4。nanoid 大有取代 UUID 的趋势。
+与 UUID 相比，它使用更大的字母表，这样一来它生成的字符串长度更短，只有21个字符。
 
-![Alt text](/blog/images/image-2.png)
+并且它的包体积只有UUID的1/4。nanoid 大有取代 UUID 的趋势。
+
+![Alt text](/blog/images/image-4.png)
 
 另外，nanoid 可以自定义字母表和ID长度，这给用户提供了更多灵活性。
 
@@ -55,13 +34,12 @@ const nanoid = customAlphabet('1234567890abcdef', 10)
 model.id = nanoid() //=> "4f90d13a42"
 ```
 
+更多信息见 NPM：[https://www.npmjs.com/package/nanoid](https://www.npmjs.com/package/nanoid)
 
-## SHA-1
+## Crypto.randomUUID
 
-SHA-1（英语：Secure Hash Algorithm 1，中文名：安全散列算法1）是一种密码散列函数，美国国家安全局设计，并由美国国家标准技术研究所（NIST）发布为联邦数据处理标准（FIPS）。SHA-1可以生成一个被称为消息摘要的160位（20字节）散列值，散列值通常的呈现形式为40个十六进制数。
+事实上，如果你的项目仅面向现代浏览器：原生 crypto.randomUUID() 是最佳选择。作为浏览器原生API，它无需引入任何库，兼容性好，且符合标准UUID格式，是零依赖方案的首选。
 
-SHA-1 一种密码散列函数，密码散列函数的特性是，对任意一组输入数据进行计算，得到一个固定长度的输出摘要。如果输入相同一定会得到相同的输出，如果输入不同大概率会得到不同的输出。
+![Alt text](/blog/images/image-5.png)
 
-它的主要目的是验证原始数据是否被篡改。主要应用有文件校验和（checkSum）、密码文本加密存储等等。
-
-它其实也可以用作全局唯一标识符，它的长度160位，冲突的概率也非常小。因为相同的输入一定会产生相同的输出，所以它作为唯一标识符，是跟输入内容相关的，非常适合分布式开发。它在 git 中就有大量应用，git 中的对象唯一标识都是使用它生成的。
+详情见 MDN：[https://developer.mozilla.org/zh-CN/docs/Web/API/Crypto/randomUUID](https://developer.mozilla.org/zh-CN/docs/Web/API/Crypto/randomUUID)
