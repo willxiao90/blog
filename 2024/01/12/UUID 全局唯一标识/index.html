@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>重新认识 UUID 全局唯一标识 | Will Xiao | 分享是最好的学习</title>
+  <title>前端 UUID 生成 3 种方案 | Will Xiao | 分享是最好的学习</title>
 
   
   <meta name="author" content="Will Xiao">
@@ -21,7 +21,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="重新认识 UUID 全局唯一标识"/>
+  <meta property="og:title" content="前端 UUID 生成 3 种方案"/>
 
   <meta property="og:site_name" content="Will Xiao"/>
 
@@ -66,7 +66,7 @@
 
   
     
-    <h3 class="article-title"><span>重新认识 UUID 全局唯一标识</span></h3>
+    <h3 class="article-title"><span>前端 UUID 生成 3 种方案</span></h3>
     
   
 
@@ -88,32 +88,20 @@
       
         <h2 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h2><p>UUID 通用唯一识别码（Universally Unique Identifier）是用于计算机体系中以识别信息的一个128位标识符。</p>
 <p>UUID按照标准方法生成时，在实际应用中具有唯一性，且不依赖中央机构的注册和分配。UUID重复的概率接近零，可以忽略不计。</p>
-<p>因此，UUID 的应用非常普遍，例如被用作分布式数据库表的主键，微软的GUID(Globals Unique Identifiers)等等。</p>
-<p>在其规范的文本表示中，UUID 的 16 个 8 位字节表示为 32 个十六进制数字，由连字符 ‘-‘ 分隔成五组显示，形式为“8-4-4-4-12”总共 36 个字符（32 个十六进制数字和 4 个连字符）。例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">123e4567-e89b-12d3-a456-426655440000</span><br><span class="line">00000000-0000-0000-0000-000000000000</span><br></pre></td></tr></table></figure>
-
-
-<p>它有多个不同的版本，比较常用的有v1、v3、v4、v5：</p>
-<p>版本1的UUID是根据时间和节点ID（通常是MAC地址）生成；</p>
-<p>版本3、版本5透过对命名空间（namespace）标识符和名称进行散列生成确定性的UUID；</p>
-<p>版本4的UUID则使用随机性或伪随机性生成。</p>
-<p><img src="/blog/images/image.png" alt="Alt text"></p>
-<p>它的冲突概率非常小，以版本4的UUID为例，如果要有50%的几率至少发生一次冲突，需要生成至少 2.71E18 个UUID。计算如下：</p>
-<p><img src="/blog/images/image-1.png" alt="Alt text"></p>
-<p>这个数字相当于每秒产生 10 亿个 UUID 持续 85 年。</p>
-<p>现代的浏览器提供了 crypto.randomUUID() 方法，可以非常方便的生成一个版本4的UUID。</p>
-<p>或者你也可以使用第三方库 uuid 来生成 v1、v3、v4、v5 版本的 UUID。</p>
+<p>因此，UUID 的应用非常普遍，被广泛应用于需要对数据记录、资源和实体进行唯一标识的众多应用中：数据库、资源标识符、会话和事务标识符、对象存储等。</p>
+<p>前端可以使用 uuidjs 库实现：<a href="https://github.com/uuidjs/uuid" target="_blank" rel="noopener">https://github.com/uuidjs/uuid</a></p>
+<p><img src="/blog/images/image-3.png" alt="Alt text"></p>
 <h2 id="nanoid"><a href="#nanoid" class="headerlink" title="nanoid"></a>nanoid</h2><p>nanoid 是 UUID 的有力竞争者，它同样可以生成唯一的标识字符串。</p>
-<p>与 UUID 相比，它使用更大的字母表，这样一来它生成的字符串长度更短，只有21个字符，并且它的包体积只有UUID的1/4。nanoid 大有取代 UUID 的趋势。</p>
-<p><img src="/blog/images/image-2.png" alt="Alt text"></p>
+<p>与 UUID 相比，它使用更大的字母表，这样一来它生成的字符串长度更短，只有21个字符。</p>
+<p>并且它的包体积只有UUID的1/4。nanoid 大有取代 UUID 的趋势。</p>
+<p><img src="/blog/images/image-4.png" alt="Alt text"></p>
 <p>另外，nanoid 可以自定义字母表和ID长度，这给用户提供了更多灵活性。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; customAlphabet &#125; <span class="keyword">from</span> <span class="string">'nanoid'</span></span><br><span class="line"><span class="keyword">const</span> nanoid = customAlphabet(<span class="string">'1234567890abcdef'</span>, <span class="number">10</span>)</span><br><span class="line">model.id = nanoid() <span class="comment">//=&gt; "4f90d13a42"</span></span><br></pre></td></tr></table></figure>
 
-
-<h2 id="SHA-1"><a href="#SHA-1" class="headerlink" title="SHA-1"></a>SHA-1</h2><p>SHA-1（英语：Secure Hash Algorithm 1，中文名：安全散列算法1）是一种密码散列函数，美国国家安全局设计，并由美国国家标准技术研究所（NIST）发布为联邦数据处理标准（FIPS）。SHA-1可以生成一个被称为消息摘要的160位（20字节）散列值，散列值通常的呈现形式为40个十六进制数。</p>
-<p>SHA-1 一种密码散列函数，密码散列函数的特性是，对任意一组输入数据进行计算，得到一个固定长度的输出摘要。如果输入相同一定会得到相同的输出，如果输入不同大概率会得到不同的输出。</p>
-<p>它的主要目的是验证原始数据是否被篡改。主要应用有文件校验和（checkSum）、密码文本加密存储等等。</p>
-<p>它其实也可以用作全局唯一标识符，它的长度160位，冲突的概率也非常小。因为相同的输入一定会产生相同的输出，所以它作为唯一标识符，是跟输入内容相关的，非常适合分布式开发。它在 git 中就有大量应用，git 中的对象唯一标识都是使用它生成的。</p>
+<p>更多信息见 NPM：<a href="https://www.npmjs.com/package/nanoid" target="_blank" rel="noopener">https://www.npmjs.com/package/nanoid</a></p>
+<h2 id="Crypto-randomUUID"><a href="#Crypto-randomUUID" class="headerlink" title="Crypto.randomUUID"></a>Crypto.randomUUID</h2><p>事实上，如果你的项目仅面向现代浏览器：原生 crypto.randomUUID() 是最佳选择。作为浏览器原生API，它无需引入任何库，兼容性好，且符合标准UUID格式，是零依赖方案的首选。</p>
+<p><img src="/blog/images/image-5.png" alt="Alt text"></p>
+<p>详情见 MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Crypto/randomUUID" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Crypto/randomUUID</a></p>
 
       
     </div>
@@ -130,7 +118,7 @@
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/blog/tags/uuid/">uuid</a><a href="/blog/tags/全局唯一标识/">全局唯一标识</a>
+        <a href="/blog/tags/uuid/">uuid</a>
     </span>
     
 
