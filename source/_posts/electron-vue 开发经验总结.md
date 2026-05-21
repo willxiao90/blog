@@ -167,7 +167,7 @@ export default new Vuex.Store({
 })
 ```
 
-事实上，如果应用很简单，比如我的项目只有一个窗口，就不存在共享状态的问题，所以完全可以不用 createSharedMutations 中间件，也不用在 main.js 中引入 store 文件，store 所有用法就跟 vuex 一样了。
+事实上，如果应用很简单，比如项目只有一个窗口，就不存在共享状态的问题，所以完全可以不用 createSharedMutations 中间件，也不用在 main.js 中引入 store 文件，store 所有用法就跟 vuex 一样了。
 
 ## 三、日志
 
